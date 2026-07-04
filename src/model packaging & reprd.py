@@ -22,7 +22,7 @@ X = df.drop("target", axis=1)
 y = df["target"]
 
 # Identify numeric columns
-numeric_cols = ["age","trestbps","chol","thalach","oldpeak"]
+numeric_cols = ["age", "trestbps", "chol", "thalach", "oldpeak"]
 
 # ============================
 # PREPROCESSING PIPELINE
@@ -69,7 +69,7 @@ with mlflow.start_run():
 
     # Predict
     y_pred = model_pipeline.predict(X_test)
-    y_prob = model_pipeline.predict_proba(X_test)[:,1]
+    y_prob = model_pipeline.predict_proba(X_test)[:, 1]
 
     # Metrics
     acc = accuracy_score(y_test, y_pred)

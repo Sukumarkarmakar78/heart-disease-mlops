@@ -1,6 +1,7 @@
 import joblib
 import pandas as pd
 
+
 def test_model_prediction():
     model = joblib.load("models/model_pipeline.pkl")
 

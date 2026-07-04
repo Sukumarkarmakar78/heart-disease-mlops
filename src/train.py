@@ -11,7 +11,13 @@ import seaborn as sns
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import accuracy_score, precision_score, recall_score, roc_auc_score, roc_curve
+from sklearn.metrics import (
+    accuracy_score,
+    precision_score,
+    recall_score,
+    roc_auc_score,
+    roc_curve,
+)
 from sklearn.model_selection import GridSearchCV
 
 # ============================
@@ -55,10 +61,10 @@ with mlflow.start_run():
     # MODEL 2: Random Forest
     # ============================
     rf_model = RandomForestClassifier(random_state=42)
-    
+
     param_grid = {
         "n_estimators": [100, 200],
-        "max_depth": [None, 5, 10]
+        "max_depth": [None, 5, 10],
     }
 
     grid = GridSearchCV(rf_model, param_grid, cv=3, scoring="roc_auc")

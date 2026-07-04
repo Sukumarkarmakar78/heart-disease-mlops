@@ -178,11 +178,9 @@ pytest -q
 ## Repo Access
 
 This report corresponds to the repository at the workspace root. Replace the placeholder below with your repository URL:
-
 https://github.com/Sukumarkarmakar78/heart-disease-mlops
 
 ---
-
 ## Next steps (suggested)
 
 1. Add CI/CD run screenshots to `screenshots/ci_cd/` and mark them in the checklist.
