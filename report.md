@@ -179,7 +179,9 @@ pytest -q
 
 This report corresponds to the repository at the workspace root. Replace the placeholder below with your repository URL:
 
-[Project repository (placeholder)](https://github.com/USERNAME/REPO)
+https://github.com/Sukumarkarmakar78/heart-disease-mlops
+
+
 
 ---
 
@@ -198,3 +200,6 @@ pandoc report.md -o report.pdf --from markdown
 
 Appendix: For any questions or if you want me to generate `report.pdf` and embed actual screenshots, tell me and I will produce them.
 # Project Report
+
+
+[def]: 8/heart-disease-mlops
