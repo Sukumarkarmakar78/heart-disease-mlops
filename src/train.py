@@ -65,20 +65,29 @@ with mlflow.start_run():
     # ============================
     # MODEL 2: Random Forest
     # ============================
-    rf_model = RandomForestClassifier(random_state=42)
+    preprocessor = ColumnTransformer(
+        transformers=[
+            ("num", StandardScaler(), ["age", "trestbps", "chol", "thalach", "oldpeak"])
+        ],
+        remainder="passthrough"
+    )
+    rf_pipeline = Pipeline([
+        ("preprocessor", preprocessor),
+        ("classifier", RandomForestClassifier(random_state=42)),
+    ])
 
     param_grid = {
-        "n_estimators": [100, 200],
-        "max_depth": [None, 5, 10],
+        "classifier__n_estimators": [100, 200],
+        "classifier__max_depth": [None, 5, 10],
     }
 
-    grid = GridSearchCV(rf_model, param_grid, cv=3, scoring="roc_auc")
+    grid = GridSearchCV(rf_pipeline, param_grid, cv=3, scoring="roc_auc")
     grid.fit(X_train, y_train)
 
-    best_rf = grid.best_estimator_
+    best_pipeline = grid.best_estimator_
 
-    y_pred_rf = best_rf.predict(X_test)
-    y_prob_rf = best_rf.predict_proba(X_test)[:, 1]
+    y_pred_rf = best_pipeline.predict(X_test)
+    y_prob_rf = best_pipeline.predict_proba(X_test)[:, 1]
 
     # Metrics
     acc_rf = accuracy_score(y_test, y_pred_rf)
@@ -87,8 +96,8 @@ with mlflow.start_run():
     roc_rf = roc_auc_score(y_test, y_prob_rf)
 
     # Log parameters
-    mlflow.log_param("rf_n_estimators", grid.best_params_["n_estimators"])
-    mlflow.log_param("rf_max_depth", grid.best_params_["max_depth"])
+    mlflow.log_param("rf_n_estimators", grid.best_params_["classifier__n_estimators"])
+    mlflow.log_param("rf_max_depth", grid.best_params_["classifier__max_depth"])
 
     # Log metrics
     mlflow.log_metric("rf_accuracy", acc_rf)
@@ -99,23 +108,11 @@ with mlflow.start_run():
     # ============================
     # SAVE MODEL
     # ============================
-    mlflow.sklearn.log_model(best_rf, "model")
+    mlflow.sklearn.log_model(best_pipeline, "model")
 
     model_dir = "models"
     os.makedirs(model_dir, exist_ok=True)
-
-    preprocessor = ColumnTransformer(
-        transformers=[
-            ("num", StandardScaler(), ["age", "trestbps", "chol", "thalach", "oldpeak"])
-        ],
-        remainder="passthrough"
-    )
-    model_pipeline = Pipeline([
-        ("preprocessor", preprocessor),
-        ("classifier", best_rf),
-    ])
-
-    joblib.dump(model_pipeline, os.path.join(model_dir, "model_pipeline.pkl"))
+    joblib.dump(best_pipeline, os.path.join(model_dir, "model_pipeline.pkl"))
 
     # ============================
     # LOG PLOT (ROC CURVE)
