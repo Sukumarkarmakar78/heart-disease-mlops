@@ -56,7 +56,7 @@ jobs:
     # 7. UPLOAD ARTIFACT (MODEL)
     # ============================
     - name: Upload model artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: trained-model
         path: models/model_pipeline.pkl
