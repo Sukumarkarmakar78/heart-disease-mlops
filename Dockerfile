@@ -1,5 +1,5 @@
 # Use patched Python image with known vulnerabilities fixed
-FROM python:3.9.19-slim-bullseye
+FROM python:3.11-slim-bullseye
 
 # Create non-root user for security
 RUN useradd -m -u 1000 appuser
