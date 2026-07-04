@@ -181,8 +181,6 @@ This report corresponds to the repository at the workspace root. Replace the pla
 
 https://github.com/Sukumarkarmakar78/heart-disease-mlops
 
-
-
 ---
 
 ## Next steps (suggested)
