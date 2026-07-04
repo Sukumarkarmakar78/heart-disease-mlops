@@ -133,7 +133,7 @@ with mlflow.start_run():
     # ============================
     # LOG FEATURE IMPORTANCE
     # ============================
-    feature_importance = best_rf.feature_importances_
+    feature_importance = best_pipeline.feature_importances_
 
     plt.figure(figsize=(10, 5))
     sns.barplot(x=feature_importance, y=X.columns)
