@@ -1,0 +1,62 @@
+name: MLOps CI Pipeline
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build-test-train:
+    runs-on: ubuntu-latest
+
+    steps:
+    # ============================
+    # 1. CHECKOUT CODE
+    # ============================
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    # ============================
+    # 2. SETUP PYTHON
+    # ============================
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.9
+
+    # ============================
+    # 3. INSTALL DEPENDENCIES
+    # ============================
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+
+    # ============================
+    # 4. LINTING
+    # ============================
+    - name: Run flake8 (Lint check)
+      run: |
+        pip install flake8
+        flake8 . --exclude=venv --max-line-length=100
+
+    # ============================
+    # 5. RUN UNIT TESTS
+    # ============================
+    - name: Run tests
+      run: |
+        pytest tests/
+
+    # ============================
+    # 6. MODEL TRAINING
+    # ============================
+    - name: Train model
+      run: |
+        python src/train.py
+
+    # ============================
+    # 7. UPLOAD ARTIFACT (MODEL)
+    # ============================
+    - name: Upload model artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: trained-model
+        path: models/model_pipeline.pkl

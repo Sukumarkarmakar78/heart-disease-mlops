@@ -1,0 +1,24 @@
+artifact_path: file:C:/Users/sukumar.karmakar/OneDrive - BEST VALUE CHEM PVT LTD/Desktop/Personal/ML
+  Ops/heart-disease-mlops/heart-disease-mlops/mlruns/1/models/m-c86ff5aeba2b46c5a509211ebcc92a50/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.13.5
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.6.1
+    skops_trusted_types: null
+mlflow_version: 3.12.0
+model_id: m-c86ff5aeba2b46c5a509211ebcc92a50
+model_size_bytes: 1391955
+model_uuid: m-c86ff5aeba2b46c5a509211ebcc92a50
+prompts: null
+run_id: 44cd6dfe1c7c41309063e69ed2b7d438
+utc_time_created: '2026-05-31 10:33:21.232895'
