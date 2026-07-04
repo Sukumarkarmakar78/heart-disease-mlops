@@ -2,15 +2,18 @@
 # IMPORTS
 
 # ============================
+import os
+
+import joblib
 import pandas as pd
 import mlflow
 import mlflow.sklearn
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LogisticRegression
+from sklearn.compose import ColumnTransformer
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import (
     accuracy_score,
     precision_score,
@@ -18,7 +21,9 @@ from sklearn.metrics import (
     roc_auc_score,
     roc_curve,
 )
-from sklearn.model_selection import GridSearchCV
+from sklearn.model_selection import GridSearchCV, train_test_split
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
 
 # ============================
 # LOAD CLEAN DATA
@@ -95,6 +100,22 @@ with mlflow.start_run():
     # SAVE MODEL
     # ============================
     mlflow.sklearn.log_model(best_rf, "model")
+
+    model_dir = "models"
+    os.makedirs(model_dir, exist_ok=True)
+
+    preprocessor = ColumnTransformer(
+        transformers=[
+            ("num", StandardScaler(), ["age", "trestbps", "chol", "thalach", "oldpeak"])
+        ],
+        remainder="passthrough"
+    )
+    model_pipeline = Pipeline([
+        ("preprocessor", preprocessor),
+        ("classifier", best_rf),
+    ])
+
+    joblib.dump(model_pipeline, os.path.join(model_dir, "model_pipeline.pkl"))
 
     # ============================
     # LOG PLOT (ROC CURVE)

@@ -40,18 +40,18 @@ jobs:
         flake8 . --exclude=venv --max-line-length=100
 
     # ============================
-    # 5. RUN UNIT TESTS
-    # ============================
-    - name: Run tests
-      run: |
-        pytest tests/
-
-    # ============================
-    # 6. MODEL TRAINING
+    # 5. MODEL TRAINING
     # ============================
     - name: Train model
       run: |
         python src/train.py
+
+    # ============================
+    # 6. RUN UNIT TESTS
+    # ============================
+    - name: Run tests
+      run: |
+        pytest tests/
 
     # ============================
     # 7. UPLOAD ARTIFACT (MODEL)
