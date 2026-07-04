@@ -1,11 +1,11 @@
-from fastapi import FastAPI, Request
-from pydantic import BaseModel
 import joblib
-import pandas as pd
 import logging
 import sys
 import time
 from pythonjsonlogger import jsonlogger
+from fastapi import FastAPI, Request
+from pydantic import BaseModel
+import pandas as pd
 from prometheus_client import Counter, Histogram, generate_latest, CONTENT_TYPE_LATEST
 from starlette.responses import Response
 

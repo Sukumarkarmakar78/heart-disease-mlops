@@ -40,7 +40,7 @@ with mlflow.start_run():
     log_model.fit(X_train, y_train)
 
     y_pred_log = log_model.predict(X_test)
-    y_prob_log = log_model.predict_proba(X_test)[:,1]
+    y_prob_log = log_model.predict_proba(X_test)[:, 1]
 
     # Metrics
     acc_log = accuracy_score(y_test, y_pred_log)
@@ -67,7 +67,7 @@ with mlflow.start_run():
     best_rf = grid.best_estimator_
 
     y_pred_rf = best_rf.predict(X_test)
-    y_prob_rf = best_rf.predict_proba(X_test)[:,1]
+    y_prob_rf = best_rf.predict_proba(X_test)[:, 1]
 
     # Metrics
     acc_rf = accuracy_score(y_test, y_pred_rf)
@@ -97,7 +97,7 @@ with mlflow.start_run():
 
     plt.figure()
     plt.plot(fpr, tpr, label=f"RF ROC (AUC={roc_rf:.2f})")
-    plt.plot([0,1],[0,1],'--')
+    plt.plot([0, 1], [0, 1], '--')
     plt.xlabel("False Positive Rate")
     plt.ylabel("True Positive Rate")
     plt.title("ROC Curve")
@@ -111,7 +111,7 @@ with mlflow.start_run():
     # ============================
     feature_importance = best_rf.feature_importances_
 
-    plt.figure(figsize=(10,5))
+    plt.figure(figsize=(10, 5))
     sns.barplot(x=feature_importance, y=X.columns)
     plt.title("Feature Importance")
     plt.savefig("feature_importance.png")
